@@ -46,13 +46,20 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
 
         }else{
 
-            /**
-             * Здесь соединяемся с интернетом
-             */
+            getViewState().isOnline();
 
         }
     }
 
+    public void onGetCityIndex(String cityIndex){
+        Log.i("MyLogger", "CityIndex: " + cityIndex);
+    }
+
+    public void onIsOnline(boolean isOnline){
+
+        Log.i("MyLogger", "IsOnline: " + Boolean.toString(isOnline));
+
+    }
 
     private void downloadCities(){
 
@@ -118,14 +125,6 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
 
     }
 
-
-    public void onGetCityIndex(String cityIndex){
-        Log.i("MyLogger", "CityIndex: " + cityIndex);
-    }
-
-    public void onGetCityName(String cityName){
-        Log.i("MyLogger", "CityName: " + cityName);
-    }
 
 
 }

@@ -1,5 +1,7 @@
 package com.strikalov.weatherapp.view;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -51,6 +53,19 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView{
         splashPresenter.onGetCityIndex(cityIndex);
     }
 
+    @Override
+    public void isOnline() {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(networkInfo != null && networkInfo.isConnected()){
+            splashPresenter.onIsOnline(true);
+        }else {
+            splashPresenter.onIsOnline(false);
+        }
+
+    }
 
     /**
      * Удалить эти методы
@@ -61,14 +76,4 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView{
         CityDownloadsPreferences.setCityIndex(this, cityIndex);
     }
 
-    @Override
-    public void setCityName(String cityName) {
-        CityDownloadsPreferences.setCityName(this, cityName);
-    }
-
-    @Override
-    public void getCityName() {
-        String cityName = CityDownloadsPreferences.getCityName(this);
-        splashPresenter.onGetCityName(cityName);
-    }
 }

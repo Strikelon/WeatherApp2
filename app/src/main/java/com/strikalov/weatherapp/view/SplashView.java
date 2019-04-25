@@ -10,13 +10,12 @@ public interface SplashView extends MvpView {
 
     void getCityIndex();
 
+    void isOnline();
+
     /**
      * Эти методы нужно удалить, именно для этой активити они нужны, использовал для тестов
      */
 
     void setCityIndex(String cityIndex);
 
-    void setCityName(String cityName);
-
-    void getCityName();
 }
