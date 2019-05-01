@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
 
+/**
+ * Класс для преобразования информации из json файла в assets в объекты класса CityGsonArray
+ */
 public class CityGsonArray {
 
     @SerializedName("citylist")

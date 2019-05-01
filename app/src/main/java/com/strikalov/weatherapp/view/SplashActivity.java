@@ -1,5 +1,6 @@
 package com.strikalov.weatherapp.view;
 
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,6 +16,10 @@ import com.strikalov.weatherapp.presenter.SplashPresenter;
 import javax.inject.Inject;
 
 public class SplashActivity extends MvpAppCompatActivity implements SplashView{
+
+    /**
+     * Инжектим презентер с помощью dagger
+     */
 
     @Inject
     @InjectPresenter
@@ -36,23 +41,39 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView{
 
     }
 
+    /**
+     * В методе запрашиваем из соотвествующего preference файла,
+     * загружена ли база данный со списком городов
+     */
     @Override
     public void getIsCityDatabaseDownloaded() {
         boolean isCityDatabaseDownloaded =  CityDownloadsPreferences.isCityDatabaseDownloaded(this);
         splashPresenter.onGetIsCityDatabaseDownloaded(isCityDatabaseDownloaded);
     }
 
+    /**
+     * Данный метод изменяет значение в соответствующем preference файле,
+     * загружена ли база данный данных со списком городов или нет
+     * @param value
+     */
     @Override
     public void setIsCityDatabaseDownloaded(boolean value) {
         CityDownloadsPreferences.setIsCityDatabaseDownloaded(this, value);
     }
 
+    /**
+     * Метод получает индекс города, прогноз погоды для которого должен быть загружен,
+     * или возвращает null, если город пользователем не выбран и передает презентеру
+     */
     @Override
     public void getCityIndex() {
         String cityIndex = CityDownloadsPreferences.getCityIndex(this);
         splashPresenter.onGetCityIndex(cityIndex);
     }
 
+    /**
+     * Метод проверяет есть ли связь с интернетом и передает презентеру
+     */
     @Override
     public void isOnline() {
 
@@ -68,12 +89,25 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView{
     }
 
     /**
-     * Удалить эти методы
+     * Стартуем MainActivity и передаем ему параметр isOnline, чтобы понять
+     * была ли связь с интернетом и был обновлен прогноз погоды, или нет
+     * @param isOnline
      */
-
     @Override
-    public void setCityIndex(String cityIndex) {
-        CityDownloadsPreferences.setCityIndex(this, cityIndex);
+    public void startMainActivity(boolean isOnline) {
+        Intent intent = MainActivity.newIntent(this, isOnline);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * стартуем CitySelectionActivity
+     */
+    @Override
+    public void startCitySelectionActivity() {
+        Intent intent = CitySelectionActivity.newIntent(this);
+        startActivity(intent);
+        finish();
     }
 
 }

@@ -1,14 +1,19 @@
 package com.strikalov.weatherapp.dagger;
 
 import com.strikalov.weatherapp.model.databases.AppDatabase;
-import com.strikalov.weatherapp.model.interactors.AssetsInputStreamInteractor;
-import com.strikalov.weatherapp.model.interactors.AssetsInputStreamInteractorImpl;
-import com.strikalov.weatherapp.model.interactors.CityDatabaseInteractor;
-import com.strikalov.weatherapp.model.interactors.CityDatabaseInteractorImpl;
+import com.strikalov.weatherapp.model.interactors.CityInteractor;
+import com.strikalov.weatherapp.model.interactors.CityInteractorImpl;
+import com.strikalov.weatherapp.model.interactors.WeatherForecastInteractor;
+import com.strikalov.weatherapp.model.interactors.WeatherForecastInteractorImpl;
+import com.strikalov.weatherapp.model.network.WebApi;
 import com.strikalov.weatherapp.model.repositories.AssetsInputStreamRepository;
 import com.strikalov.weatherapp.model.repositories.AssetsInputStreamRepositoryImpl;
 import com.strikalov.weatherapp.model.repositories.CityDatabaseRepository;
 import com.strikalov.weatherapp.model.repositories.CityDatabaseRepositoryImpl;
+import com.strikalov.weatherapp.model.repositories.NetworkRepository;
+import com.strikalov.weatherapp.model.repositories.NetworkRepositoryImpl;
+import com.strikalov.weatherapp.model.repositories.WeatherForecastDatabaseRepository;
+import com.strikalov.weatherapp.model.repositories.WeatherForecastDatabaseRepositoryImpl;
 
 import java.io.InputStream;
 
@@ -42,14 +47,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public AssetsInputStreamRepository provideAssetsInputStreamRepository(InputStream assetsInputStream){
-        return new AssetsInputStreamRepositoryImpl(assetsInputStream);
+    public WebApi provideWebApi(){
+        return new WebApi();
     }
 
     @Provides
     @Singleton
-    public AssetsInputStreamInteractor provideAssetsInputStreamInteractor(AssetsInputStreamRepository assetsInputStreamRepository){
-        return new AssetsInputStreamInteractorImpl(assetsInputStreamRepository);
+    public AssetsInputStreamRepository provideAssetsInputStreamRepository(InputStream assetsInputStream){
+        return new AssetsInputStreamRepositoryImpl(assetsInputStream);
     }
 
     @Provides
@@ -60,8 +65,28 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public CityDatabaseInteractor provideCityDatabaseInteractor(CityDatabaseRepository cityDatabaseRepository){
-        return new CityDatabaseInteractorImpl(cityDatabaseRepository);
+    public CityInteractor provideCityInteractor(AssetsInputStreamRepository assetsInputStreamRepository, CityDatabaseRepository cityDatabaseRepository){
+        return new CityInteractorImpl(assetsInputStreamRepository, cityDatabaseRepository);
+    }
+
+    @Provides
+    @Singleton
+    public NetworkRepository provideNetworkRepository(WebApi webApi){
+        return new NetworkRepositoryImpl(webApi);
+    }
+
+    @Provides
+    @Singleton
+    public WeatherForecastDatabaseRepository provideWeatherForecastDatabaseRepository(AppDatabase appDatabase){
+        return new WeatherForecastDatabaseRepositoryImpl(appDatabase);
+    }
+
+    @Provides
+    @Singleton
+    public WeatherForecastInteractor provideWeatherForecastInteractor(NetworkRepository networkRepository,
+                                                                      WeatherForecastDatabaseRepository weatherForecastDatabaseRepository){
+
+        return new WeatherForecastInteractorImpl(networkRepository, weatherForecastDatabaseRepository);
     }
 
 }

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.util.Log;
 
-import com.strikalov.weatherapp.common.Constants;
 import com.strikalov.weatherapp.dagger.AppComponent;
 import com.strikalov.weatherapp.dagger.AppModule;
 import com.strikalov.weatherapp.dagger.DaggerAppComponent;
@@ -16,6 +15,8 @@ import java.io.InputStream;
 public class App extends Application {
 
     private static final String FILE_NAME = "citybase.json";
+
+    private static final String ERROR_TAG = "ERROR_APP";
 
     private static App instance;
 
@@ -31,7 +32,7 @@ public class App extends Application {
         try {
             inputStream = getAssets().open(FILE_NAME);
         } catch (IOException e) {
-            Log.e(Constants.TAG_APP_ERROS, "App inputStreamError: ", e);
+            Log.e(ERROR_TAG, "App inputStreamError: ", e);
         }
 
         AppDatabase appDatabase = Room.databaseBuilder(this, AppDatabase.class, "appdatabase").build();

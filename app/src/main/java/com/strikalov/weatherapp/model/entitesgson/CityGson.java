@@ -3,6 +3,9 @@ package com.strikalov.weatherapp.model.entitesgson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Класс для преобразования информации из json файла в assets в объекты класса CityGson
+ */
 public class CityGson {
 
     @SerializedName("cityid")

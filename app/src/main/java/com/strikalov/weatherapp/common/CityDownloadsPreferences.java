@@ -21,6 +21,11 @@ public class CityDownloadsPreferences {
     private static final String KEY_CITY_INDEX_PREFERENCE = "key_city_index";
 
     /**
+     * Константа для доступа к названию выбранного пользователем города
+     */
+    private static final String KEY_CITY_NAME_PREFERENCE = "key_city_name";
+
+    /**
      * Получаем boolean значение из файла preferences
      */
     public static boolean isCityDatabaseDownloaded(Context context){
@@ -53,6 +58,24 @@ public class CityDownloadsPreferences {
         context.getSharedPreferences(CITY_DOWNLOADS_PREFERENCES, Context.MODE_PRIVATE)
                 .edit()
                 .putString(KEY_CITY_INDEX_PREFERENCE, value)
+                .apply();
+    }
+
+    /**
+     * Получаем название выбранного пользователем города, если он не записан, получаем null
+     */
+    public static String getCityName(Context context){
+        return context.getSharedPreferences(CITY_DOWNLOADS_PREFERENCES, Context.MODE_PRIVATE)
+                .getString(KEY_CITY_NAME_PREFERENCE, null);
+    }
+
+    /**
+     * Сохраняем в файл, название выбранного пользователем города
+     */
+    public static void setCityName(Context context, String value){
+        context.getSharedPreferences(CITY_DOWNLOADS_PREFERENCES, Context.MODE_PRIVATE)
+                .edit()
+                .putString(KEY_CITY_NAME_PREFERENCE, value)
                 .apply();
     }
 
