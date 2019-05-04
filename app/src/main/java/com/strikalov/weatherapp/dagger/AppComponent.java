@@ -1,5 +1,6 @@
 package com.strikalov.weatherapp.dagger;
 
+import com.strikalov.weatherapp.view.CitySelectionActivity;
 import com.strikalov.weatherapp.view.SettingsActivity;
 import com.strikalov.weatherapp.view.SplashActivity;
 
@@ -13,5 +14,6 @@ public interface AppComponent {
 
     void injectSplashActivity(SplashActivity splashActivity);
     void injectSettingsActivity(SettingsActivity settingsActivity);
+    void injectCitySelectionActivity(CitySelectionActivity citySelectionActivity);
 
 }

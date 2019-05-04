@@ -5,6 +5,7 @@ import com.strikalov.weatherapp.model.entities.City;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 /**
@@ -24,5 +25,26 @@ public interface CityInteractor {
      * @return
      */
     Completable saveCityListInDatabase(List<City> cities);
+
+    /**
+     * Метод запрашивает из базы данных все города
+     * @return
+     */
+    Maybe<List<City>> getAllCitiesFromDatabase();
+
+    /**
+     * Метод запрашивает из базы данных все избранные города
+     * @return
+     */
+    Maybe<List<City>> getFavoritesCitiesFromDatabase();
+
+    /**
+     * Метод меняет в базе данных у города с заданным индексом
+     * значение поля избранное/не избранное
+     * @param desiredCityIndex
+     * @param favoriteValue
+     * @return
+     */
+    Completable updateCityFavoriteInDatabase(String desiredCityIndex, int favoriteValue);
 
 }

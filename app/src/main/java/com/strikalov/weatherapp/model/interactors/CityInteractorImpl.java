@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -78,6 +79,43 @@ public class CityInteractorImpl implements CityInteractor {
                 .observeOn(observeOnScheduler);
     }
 
+    /**
+     * Метод запрашивает из базы данных все города
+     * с помощью репозитория cityDatabaseRepository
+     * @return
+     */
+    @Override
+    public Maybe<List<City>> getAllCitiesFromDatabase() {
+        return cityDatabaseRepository.getAllCities()
+                .subscribeOn(subscribeOnScheduler)
+                .observeOn(observeOnScheduler);
+    }
 
+    /**
+     * Метод запрашивает из базы данных все избранные города
+     * с помощью репозитория cityDatabaseRepository
+     * @return
+     */
+    @Override
+    public Maybe<List<City>> getFavoritesCitiesFromDatabase() {
+        return cityDatabaseRepository.getFavoritesCities()
+                .subscribeOn(subscribeOnScheduler)
+                .observeOn(observeOnScheduler);
+    }
 
+    /**
+     * Метод меняет в базе данных у города с заданным индексом
+     * значение поля избранное/не избранное
+     * с помощью репозитория cityDatabaseRepository
+     * @param desiredCityIndex
+     * @param favoriteValue
+     * @return
+     */
+    @Override
+    public Completable updateCityFavoriteInDatabase(String desiredCityIndex, int favoriteValue) {
+        return cityDatabaseRepository
+                .updateIsFavoritesByCityIndex(desiredCityIndex, favoriteValue)
+                .subscribeOn(subscribeOnScheduler)
+                .observeOn(observeOnScheduler);
+    }
 }

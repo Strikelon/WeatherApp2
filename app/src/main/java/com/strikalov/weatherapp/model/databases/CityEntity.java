@@ -1,5 +1,6 @@
 package com.strikalov.weatherapp.model.databases;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -18,6 +19,7 @@ public class CityEntity {
     /**
      * Индекс города для запроса прогноза погоды у сервера-погоды
      */
+    @ColumnInfo(index = true)
     private String cityIndex;
 
     /**
@@ -28,13 +30,14 @@ public class CityEntity {
     /**
      * Параметр, обозначающий, добавлен ли город в избранный список
      */
-    private int isSelected;
+    @ColumnInfo(index = true)
+    private int isFavorites;
 
-    public CityEntity(String cityIndex, String cityName, int isSelected){
+    public CityEntity(String cityIndex, String cityName, int isFavorites){
 
         this.cityIndex = cityIndex;
         this.cityName = cityName;
-        this.isSelected = isSelected;
+        this.isFavorites = isFavorites;
     }
 
     /**
@@ -65,11 +68,11 @@ public class CityEntity {
         this.cityName = cityName;
     }
 
-    public int getIsSelected() {
-        return isSelected;
+    public int getIsFavorites() {
+        return isFavorites;
     }
 
-    public void setIsSelected(int isSelected) {
-        this.isSelected = isSelected;
+    public void setIsFavorites(int isFavorites) {
+        this.isFavorites = isFavorites;
     }
 }

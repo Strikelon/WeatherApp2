@@ -7,4 +7,12 @@
     <!--Экран настроек-->
     <color name="title_text_color">#1565C0</color>
     <color name="measure_text_color">#000</color>
+
+    <!--recycler_city_selection_item-->
+    <color name="recycler_city_selection_item_text">#000</color>
+    <color name="recycler_city_selection_line_color">#A8A5A5</color>
+
+
 </resources>
+
+

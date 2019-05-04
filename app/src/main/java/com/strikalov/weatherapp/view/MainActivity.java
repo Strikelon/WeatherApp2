@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.strikalov.weatherapp.R;
+import com.strikalov.weatherapp.common.CityDownloadsPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +33,18 @@ public class MainActivity extends AppCompatActivity {
 
             boolean isOnline = getIntent().getBooleanExtra(MAIN_ACTIVITY_EXTRA, false);
 
-            String text = "MainActivity" + Boolean.toString(isOnline);
+            String text = "MainActivity - " + Boolean.toString(isOnline) + "\n";
+
+            String cityIndex = CityDownloadsPreferences.getCityIndex(this);
+
+            String cityName = CityDownloadsPreferences.getCityName(this);
+
+            if(cityIndex != null) {
+                text = text + "cityIndex: " + cityIndex + "\n";
+            }
+            if(cityName != null) {
+                text = text + "cityName: " + cityName + "\n";
+            }
 
             textView.setText(text);
 
