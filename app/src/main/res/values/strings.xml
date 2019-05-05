@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+
+    <!--Экран настроек-->
+    <string name="title_settings_activity">Настройки</string>
+    <string name="settings_measure_units_name">Единицы измерения</string>
+    <string name="settings_wind_speed_name">Скорость ветра</string>
+    <string name="settings_temperature_name">Температура</string>
+    <string name="settings_pressure_name">Атм. давление</string>
+    <string name="settings_radio_meters_name">м/с</string>
+    <string name="settings_radio_kilometers_name">км/ч</string>
+    <string name="settings_radio_celsius_name">С°</string>
+    <string name="settings_radio_fahrenheit_name">F°</string>
+    <string name="settings_radio_mm_name">мм</string>
+    <string name="settings_radio_hpa_name">hPa</string>
+
+    <!--Экран выбора города-->
+    <string name="title_city_selection">Выбор города</string>
+    <string name="enter_city_name">Введите название города</string>
+    <string name="frame_layout_empty_list_text">Список пустой</string>
+    <string name="snack_bar_message_city_not_selected">Город не выбран. Покинуть приложение?</string>
+    <string name="snack_bar_action_exit">ВЫЙТИ</string>
+
+    <!--recycler_city_selection_item-->
+    <string name="city_selection_picture_description">city_selection_picture</string>
+
+    <!--city_selection_option_menu-->
+    <string name="city_selection_option_menu_done">К прогнозу погоды</string>
+
 </resources>
