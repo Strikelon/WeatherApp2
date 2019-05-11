@@ -5,6 +5,7 @@ import com.strikalov.weatherapp.model.repositories.NetworkRepository;
 import com.strikalov.weatherapp.model.repositories.WeatherForecastDatabaseRepository;
 
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -69,6 +70,19 @@ public class WeatherForecastInteractorImpl implements WeatherForecastInteractor 
     @Override
     public Completable insertWeatherForecastInDatabase(String cityIndex, WeatherForecast weatherForecast) {
         return weatherForecastDatabaseRepository.insertWeatherForecast(cityIndex, weatherForecast)
+                .subscribeOn(subscribeOnScheduler)
+                .observeOn(observeOnScheduler);
+    }
+
+    /**
+     * Метод возвращает из базы данных прогноз погоды для города с искомым cityIndex
+     * с помощью weatherForecastDatabaseRepository
+     * @param cityIndex
+     * @return
+     */
+    @Override
+    public Maybe<WeatherForecast> loadWeatherForecastFromDatabase(String cityIndex) {
+        return weatherForecastDatabaseRepository.getWeatherForecastByCityIndex(cityIndex)
                 .subscribeOn(subscribeOnScheduler)
                 .observeOn(observeOnScheduler);
     }

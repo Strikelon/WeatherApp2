@@ -3,6 +3,7 @@ package com.strikalov.weatherapp.model.interactors;
 import com.strikalov.weatherapp.model.entities.WeatherForecast;
 
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 
 /**
@@ -26,5 +27,12 @@ public interface WeatherForecastInteractor {
      * @return
      */
     Completable insertWeatherForecastInDatabase(String cityIndex,WeatherForecast weatherForecast);
+
+    /**
+     * Метод возвращает из базы данных прогноз погоды для города с искомым cityIndex
+     * @param cityIndex
+     * @return
+     */
+    Maybe<WeatherForecast> loadWeatherForecastFromDatabase(String cityIndex);
 
 }

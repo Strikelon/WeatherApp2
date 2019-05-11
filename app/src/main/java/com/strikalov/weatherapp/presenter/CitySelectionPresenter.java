@@ -46,6 +46,13 @@ public class CitySelectionPresenter extends MvpPresenter<CitySelectionView> {
      */
     private String cityIndex = null;
 
+    /**
+     * Флаг, по которому мы определяем, запущено ли CitySelectionActivity
+     * из MainActivity, и MainActivity ожидает, результат, либо
+     * CitySelectionActivity запущено из SplashActivity, тогда результат не ожидается
+     */
+    private boolean isParentWaitingResult = false;
+
     @Inject
     public CitySelectionPresenter(CityInteractor cityInteractor){
         this.cityInteractor = cityInteractor;
@@ -54,6 +61,8 @@ public class CitySelectionPresenter extends MvpPresenter<CitySelectionView> {
     /**
      * При привязке активити мы запрашиваем текущий cityIndex из preference файла,
      * с помощью метода getViewState().getCityDownloadsPreferences()
+     * Вызываем метод getFromIntentIsParentWaitingResult() для получения значения
+     * для переменной isParentWaitingResult
      * Вызываем downloadAllCitiesFromDatabase() для загрузки из базы данных всех городов,
      * для последующей передаче в активити в AutoCompleteTextView
      * @param view
@@ -62,6 +71,7 @@ public class CitySelectionPresenter extends MvpPresenter<CitySelectionView> {
     public void attachView(CitySelectionView view) {
         super.attachView(view);
         getViewState().getCityDownloadsPreferences();
+        getViewState().getFromIntentIsParentWaitingResult();
         downloadAllCitiesFromDatabase();
     }
 
@@ -269,14 +279,24 @@ public class CitySelectionPresenter extends MvpPresenter<CitySelectionView> {
      * При нажатии на кнопку в Activity в optionsMenu
      * или при нажатии backbutton - вызывается этот метод
      * Если cityIndex не равен null, и город для получения прогноза погоды выбран,
-     * вызывается метод citySelectionComplete(), если город не выбра вызывается метод
+     * вызывается метод citySelectionComplete(), если город не выбран вызывается метод
      * cityNotSelectedShow(), чтобы сообщить об это пользователю
      */
     public void onCitySelectionDone(){
         if(cityIndex != null){
-            getViewState().citySelectionComplete();
+            getViewState().citySelectionComplete(isParentWaitingResult);
         }else {
             getViewState().cityNotSelectedShow();
         }
+    }
+
+    /**
+     * Данный метод запускается из активити, после того, как мы получили boolean
+     * значение из intent. По этому значению мы определяем, из какой активити запустилась
+     * CitySelectionActivity и соответственно, нужно ли возвращать результат
+     * @param isParentWaitingResult
+     */
+    public void onGetFromIntentIsParentWaitingResult(boolean isParentWaitingResult){
+        this.isParentWaitingResult = isParentWaitingResult;
     }
 }

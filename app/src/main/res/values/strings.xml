@@ -27,4 +27,48 @@
     <!--city_selection_option_menu-->
     <string name="city_selection_option_menu_done">К прогнозу погоды</string>
 
+    <!--nav_drawer_activity_main-->
+    <string name="nav_drawer_activity_main_toolbar_text">Локации</string>
+    <string name="nav_drawer_activity_main_settings">Настройки</string>
+    <string name="nav_drawer_activity_main_send_error">Сообщить об ошибке</string>
+    <string name="nav_open_drawer">nav_open_drawer</string>
+    <string name="nav_close_drawer">nav_close_drawer</string>
+
+    <!--MainActivity-->
+    <string name="snack_bar_no_internet_connection_message">Интернет подключение отсутствует</string>
+    <string name="snack_bar_no_data_to_display">Проверьте подключение с интернетом и обновите страницу.</string>
+    <string name="snack_bar_action_ok">OK</string>
+    <string name="snack_bar_settings_saved_successfully">Настройки сохранены</string>
+    <string name="weather_picture_clear_sky">Ясное небо</string>
+    <string name="weather_picture_few_clouds">Небольшая облачность</string>
+    <string name="weather_picture_scattered_clouds">Сплошная облачность</string>
+    <string name="weather_picture_broken_clouds">Пасмурно</string>
+    <string name="weather_picture_shower_rain">Проливной дождь</string>
+    <string name="weather_picture_rain">Дождь</string>
+    <string name="weather_picture_thunderstorm">Гроза</string>
+    <string name="weather_picture_snow">Снег</string>
+    <string name="weather_picture_mist">Туман</string>
+    <string name="main_activity_humidity">Влажность:</string>
+    <string name="main_activity_pressure">Атм. Давление:</string>
+    <string name="main_activity_sunrise">Восход:</string>
+    <string name="main_activity_sunset">Закат:</string>
+    <string name="main_activity_wind_direction">Направление:</string>
+    <string name="main_activity_wind_speed">Скор. Ветра:</string>
+    <string name="main_activity_temperature_degrees_celsius">" °C"</string>
+    <string name="main_activity_temperature_degrees_fahrenheit">" °F"</string>
+    <string name="main_activity_humidity_percent">" %"</string>
+    <string name="main_activity_pressure_millimeters">" мм"</string>
+    <string name="main_activity_pressure_hpa">" hPa"</string>
+    <string name="main_activity_wind_speed_meters_per_second">" м/с"</string>
+    <string name="main_activity_wind_speed_kilometers_per_hour">" км/ч"</string>
+    <string name="main_activity_wind_direction_north">С</string>
+    <string name="main_activity_wind_direction_north_east">СВ</string>
+    <string name="main_activity_wind_direction_north_west">СЗ</string>
+    <string name="main_activity_wind_direction_south">Ю</string>
+    <string name="main_activity_wind_direction_south_east">ЮВ</string>
+    <string name="main_activity_wind_direction_south_west">ЮЗ</string>
+    <string name="main_activity_wind_direction_east">В</string>
+    <string name="main_activity_wind_direction_west">З</string>
+    <string name="chooser_title">Отправить сообщение через...</string>
+
 </resources>

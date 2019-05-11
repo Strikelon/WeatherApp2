@@ -51,6 +51,14 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
     }
 
     /**
+     * При нажатии пользователем backbutton вызываем у активити
+     * метод для ее закрытия
+     */
+    public void onBackPressed(){
+        getViewState().finishView();
+    }
+
+    /**
      * При нажатии на плавающую кнопку done вызываем у активити
      * метод для ее закрытия
      */

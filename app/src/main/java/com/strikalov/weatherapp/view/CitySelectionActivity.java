@@ -53,6 +53,30 @@ public class CitySelectionActivity extends MvpAppCompatActivity implements CityS
         App.getInstance().getAppComponent().injectCitySelectionActivity(this);
     }
 
+    public static final String CITY_SELECTION_ACTIVITY_EXTRA = "EXTRA_CITY_SELECTION_ACTIVITY";
+
+    /**
+     * Метод возвращает интент, чтобы стартовать эту активити из другой активити
+     * @param context
+     * @return
+     */
+    public static Intent newIntent(Context context){
+        return new Intent(context, CitySelectionActivity.class);
+    }
+
+    /**
+     * Метод возвращает интенет с вложенным булевским параметров, для запуска CitySelectionActivity
+     * из другой активити
+     * @param context
+     * @param isParentWaitingResult
+     * @return
+     */
+    public static Intent newIntent(Context context, boolean isParentWaitingResult){
+        Intent intent = new Intent(context, CitySelectionActivity.class);
+        intent.putExtra(CITY_SELECTION_ACTIVITY_EXTRA, isParentWaitingResult);
+        return intent;
+    }
+
     /**
      *  С помощью виджета AutoCompleteTextView пользователи будут выбирать город
      */
@@ -77,16 +101,6 @@ public class CitySelectionActivity extends MvpAppCompatActivity implements CityS
      * Ссылка на самый главный родительский макет, для отображения snackbar
      */
     private CoordinatorLayout coordinatorLayout;
-
-
-    /**
-     * Метод возвращает интент, чтобы стартовать эту активити из другой активити
-     * @param context
-     * @return
-     */
-    public static Intent newIntent(Context context){
-        return new Intent(context, CitySelectionActivity.class);
-    }
 
 
     @Override
@@ -322,20 +336,29 @@ public class CitySelectionActivity extends MvpAppCompatActivity implements CityS
     }
 
     /**
-     * Метод завершает выбор города
+     * Данный метод запускается в случае успешного выбора города пользователем.
+     * Если CitySelectionActivity вызвана из SplashActivity, то мы стартуем MainActivity и закрываем
+     * текущую
+     * Если CitySelectionActivity вызвана из MainActivity, то мы возвращаем результат в MainActivity
+     * RESULT_OK и завершаем текущую активити
      */
     @Override
-    public void citySelectionComplete() {
-        /**
-         * Нужно доработать
-         */
-        finish();
+    public void citySelectionComplete(boolean isParentWaitingResult) {
+        if(isParentWaitingResult) {
+            setResult(RESULT_OK);
+            finish();
+        }else {
+            Intent intent = MainActivity.newIntent(this, false);
+            startActivity(intent);
+            finish();
+        }
     }
 
     /**
      * Метод выдает сообщение через snackbar, о том,
      * что город не выбран и спрашивает о том, хочет ли пользователь
      * выйти из приложения
+     * При нажатии на кнопку, возвращается результат RESULT_CANCELED и активити закрывается
      */
     @Override
     public void cityNotSelectedShow() {
@@ -343,9 +366,25 @@ public class CitySelectionActivity extends MvpAppCompatActivity implements CityS
         snackbar.setAction(R.string.snack_bar_action_exit, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });
         snackbar.show();
+    }
+
+    /**
+     * Метод получает из интента boolean значение. По этому значению мы понимаени
+     * запущено ли CitySelectionActivity из MainActivity, и MainActivity ожидает, результат, либо
+     * CitySelectionActivity запущено из SplashActivity, тогда результат не ожидается
+     */
+    @Override
+    public void getFromIntentIsParentWaitingResult() {
+
+        if(getIntent()!= null){
+            boolean isParentWaitingResult = getIntent().getBooleanExtra(CITY_SELECTION_ACTIVITY_EXTRA, false);
+            citySelectionPresenter.onGetFromIntentIsParentWaitingResult(isParentWaitingResult);
+        }
+
     }
 }

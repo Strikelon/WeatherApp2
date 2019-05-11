@@ -1,19 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".view.MainActivity">
 
-    <TextView
-        android:id="@+id/main_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MainActivity"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_main_activity"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:clickable="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/main_activity_relative_layout_weight"
+                android:background="@drawable/sky_background"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/temperature_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/main_activity_relative_layout_temperature_text_margin_top"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/main_activity_relative_layout_text_margin_end"
+                    android:layout_marginBottom="@dimen/main_activity_relative_layout_temperature_text_margin_bottom"
+                    android:includeFontPadding="false"
+                    tools:text="8 °C"
+                    android:textSize="@dimen/main_activity_relative_layout_temperature_text_size"
+                    android:textColor="@color/main_activity_relative_layout_text_color" />
+
+                <ImageView
+                    android:id="@+id/weather_picture"
+                    android:layout_width="@dimen/main_activity_relative_layout_image_size"
+                    android:layout_height="@dimen/main_activity_relative_layout_image_size"
+                    android:scaleType="centerInside"
+                    android:layout_toStartOf="@id/temperature_text"
+                    android:layout_alignBottom="@id/temperature_text"
+                    android:layout_marginEnd="@dimen/main_activity_relative_layout_image_margin_end"
+                    tools:src="@drawable/p01"/>
+
+                <TextView
+                    android:id="@+id/text_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/temperature_text"
+                    tools:text="06/05"
+                    android:textSize="@dimen/main_activity_relative_layout_date_text_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/main_activity_relative_layout_date_text_margin_top"
+                    android:layout_marginEnd="@dimen/main_activity_relative_layout_text_margin_end"
+                    android:textColor="@color/main_activity_relative_layout_text_color"/>
+
+                <TextView
+                    android:id="@+id/weather_picture_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_date"
+                    tools:text="Ясное небо"
+                    android:textSize="@dimen/main_activity_relative_layout_weather_picture_description_text_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/main_activity_relative_layout_weather_picture_description_margin_top"
+                    android:layout_marginEnd="@dimen/main_activity_relative_layout_text_margin_end"
+                    android:textColor="@color/main_activity_relative_layout_text_color"/>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/main_activity_grid_layout_weight"
+                app:columnCount="3"
+                android:paddingTop="@dimen/main_activity_grid_layout_padding_top_bottom"
+                android:paddingBottom="@dimen/main_activity_grid_layout_padding_top_bottom"
+                android:paddingStart="@dimen/main_activity_grid_layout_padding_start_end"
+                android:paddingEnd="@dimen/main_activity_grid_layout_padding_start_end">
+
+                <TextView
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    android:text="@string/main_activity_humidity" />
+
+                <TextView
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    android:text="@string/main_activity_pressure" />
+
+                <TextView
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    android:text="@string/main_activity_sunrise" />
+
+                <TextView
+                    android:id="@+id/text_humidity"
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:drawableTop="@drawable/humidity_pic_36"
+                    android:drawablePadding="@dimen/main_activity_grid_layout_text_drawable_padding"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    tools:text="92 %" />
+
+                <TextView
+                    android:id="@+id/text_pressure"
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:drawableTop="@drawable/pressure_pic_36"
+                    android:drawablePadding="@dimen/main_activity_grid_layout_text_drawable_padding"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    tools:text="754 мм" />
+
+                <TextView
+                    android:id="@+id/text_sunrise"
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:drawableTop="@drawable/clock_pic_36"
+                    android:drawablePadding="@dimen/main_activity_grid_layout_text_drawable_padding"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    tools:text="04:42" />
+
+                <TextView
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    android:text="@string/main_activity_wind_speed" />
+
+                <TextView
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    android:text="@string/main_activity_wind_direction" />
+
+                <TextView
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    android:text="@string/main_activity_sunset" />
+
+                <TextView
+                    android:id="@+id/wind_speed"
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:drawableTop="@drawable/wind_pic_36"
+                    android:drawablePadding="@dimen/main_activity_grid_layout_text_drawable_padding"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    tools:text="4 м/с" />
+
+                <TextView
+                    android:id="@+id/wind_direction"
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    tools:drawableTop="@drawable/north_west_pic_36"
+                    android:drawablePadding="@dimen/main_activity_grid_layout_text_drawable_padding"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    tools:text="СЗ" />
+
+                <TextView
+                    android:id="@+id/text_sunset"
+                    android:layout_height="@dimen/main_activity_grid_layout_text_width_height"
+                    android:layout_width="@dimen/main_activity_grid_layout_text_width_height"
+                    android:gravity="center"
+                    app:layout_columnWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    app:layout_rowWeight="@dimen/main_activity_grid_layout_text_column_row_weight"
+                    android:drawableTop="@drawable/clock_pic_36"
+                    android:drawablePadding="@dimen/main_activity_grid_layout_text_drawable_padding"
+                    android:textColor="@color/main_activity_grid_layout_text_color"
+                    tools:text="21:40" />
+
+            </android.support.v7.widget.GridLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>
