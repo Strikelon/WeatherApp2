@@ -1,5 +1,7 @@
 package com.strikalov.weatherapp.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -32,6 +34,15 @@ public class SettingsActivity extends MvpAppCompatActivity implements SettingsVi
 
     {
         App.getInstance().getAppComponent().injectSettingsActivity(this);
+    }
+
+    /**
+     * Метод возвращает интент для запуска из другой активити SettingsActivity
+     * @param context
+     * @return
+     */
+    public static Intent newIntent(Context context){
+        return new Intent(context, SettingsActivity.class);
     }
 
     /**
@@ -169,6 +180,15 @@ public class SettingsActivity extends MvpAppCompatActivity implements SettingsVi
     }
 
     /**
+     * При нажатии пользователем backbutton вызываем у презентера метод
+     * onBackPressed()
+     */
+    @Override
+    public void onBackPressed() {
+        settingsPresenter.onBackPressed();
+    }
+
+    /**
      * В файл настроек preferences сохраняются новые настройки для
      * единиц измерения скорости ветра
      */
@@ -232,10 +252,12 @@ public class SettingsActivity extends MvpAppCompatActivity implements SettingsVi
     }
 
     /**
-     * Метод закрывает активити
+     * Метод закрывает SettingsActivity и возвращает активити, которая ее
+     * вызвала результат, что все действия выполнились успешно
      */
     @Override
     public void finishView() {
+        setResult(RESULT_OK);
         finish();
     }
 }

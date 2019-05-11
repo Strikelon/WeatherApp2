@@ -65,11 +65,18 @@ public interface CitySelectionView extends MvpView {
     /**
      * Метод завершает выбор города
      */
-    void citySelectionComplete();
+    void citySelectionComplete(boolean isParentWaitingResult);
 
     /**
      * Метод выдает сообщение через snackbar, о том,
      * что город не выбран
      */
     void cityNotSelectedShow();
+
+    /**
+     * Метод получает из интента boolean значение. По этому значению мы понимаени
+     * запущено ли CitySelectionActivity из MainActivity, и MainActivity ожидает, результат, либо
+     * CitySelectionActivity запущено из SplashActivity, тогда результат не ожидается
+     */
+    void getFromIntentIsParentWaitingResult();
 }

@@ -3,6 +3,7 @@ package com.strikalov.weatherapp.model.databases;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -18,7 +19,7 @@ public interface CityDatabaseDao {
      * @param city
      * @return
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(CityEntity city);
 
     /**
@@ -26,7 +27,7 @@ public interface CityDatabaseDao {
      * @param cities
      * @return
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long[] insertList(List<CityEntity> cities);
 
     /**

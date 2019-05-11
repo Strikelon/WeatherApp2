@@ -3,7 +3,11 @@ package com.strikalov.weatherapp.model.databases;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+
+import io.reactivex.Maybe;
 
 @Dao
 public interface WeatherForecastDatabaseDao {
@@ -13,7 +17,7 @@ public interface WeatherForecastDatabaseDao {
      * @param weatherForecastEntity
      * @return
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(WeatherForecastEntity weatherForecastEntity);
 
     /**
@@ -31,5 +35,14 @@ public interface WeatherForecastDatabaseDao {
      */
     @Delete
     int delete(WeatherForecastEntity weatherForecastEntity);
+
+    /**
+     * Метод возвращает из базы данных прогноз погоды для
+     * города, имеющего искомый cityIndex
+     * @param desireCityIndex
+     * @return
+     */
+    @Query("SELECT * FROM WeatherForecastEntity WHERE cityIndex = :desireCityIndex")
+    Maybe<WeatherForecastEntity> getWeatherForecastByCityIndex(String desireCityIndex);
 
 }

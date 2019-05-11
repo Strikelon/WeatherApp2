@@ -1,5 +1,6 @@
 package com.strikalov.weatherapp.model.databases;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -12,12 +13,13 @@ public class WeatherForecastEntity {
     /**
      * Первичный ключ для базы данных
      */
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private long id;
 
     /**
      * Индекс города для запроса прогноза погоды у сервера-погоды
      */
+    @ColumnInfo(index = true)
     private String cityIndex;
 
     /**
@@ -94,6 +96,7 @@ public class WeatherForecastEntity {
                                  String sunriseTime,
                                  String sunsetTime){
 
+        this.id = Long.parseLong(cityIndex);
         this.cityIndex = cityIndex;
         this.date = date;
         this.temperatureDegreesCelsius = temperatureDegreesCelsius;
