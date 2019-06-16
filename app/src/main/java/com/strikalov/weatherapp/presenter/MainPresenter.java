@@ -16,12 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 
 @InjectViewState
+@Singleton
 public class MainPresenter extends MvpPresenter<MainView> {
 
     /**

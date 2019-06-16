@@ -12,11 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 
 @InjectViewState
+@Singleton
 public class CitySelectionPresenter extends MvpPresenter<CitySelectionView> {
 
     /**

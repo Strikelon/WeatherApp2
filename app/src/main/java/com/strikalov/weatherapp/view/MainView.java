@@ -1,6 +1,8 @@
 package com.strikalov.weatherapp.view;
 
 import com.arellomobile.mvp.MvpView;
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.strikalov.weatherapp.model.entities.City;
 import com.strikalov.weatherapp.model.entities.WeatherForecast;
 
@@ -13,16 +15,19 @@ public interface MainView extends MvpView {
      * избранных городов и обновляет адаптер
      * @param favoritesCityList
      */
+    @StateStrategyType(SkipStrategy.class)
     void updateNavigationRecyclerView(List<City> favoritesCityList);
 
     /**
      * В данном методе из preference файла получаем cityIndex
      */
+    @StateStrategyType(SkipStrategy.class)
     void getCityIndex();
 
     /**
      * В данном методе из preference файла получаем cityName
      */
+    @StateStrategyType(SkipStrategy.class)
     void getCityName();
 
     /**
@@ -31,6 +36,7 @@ public interface MainView extends MvpView {
      * @param cityIndex
      * @param cityName
      */
+    @StateStrategyType(SkipStrategy.class)
     void setCityDownloadsPreferences(String cityIndex, String cityName);
 
     /**
@@ -38,24 +44,28 @@ public interface MainView extends MvpView {
      * название города cityName
      * @param cityName
      */
+    @StateStrategyType(SkipStrategy.class)
     void setToolbarTitle(String cityName);
 
     /**
      * В данном методе из preference файла получаем текущие настроки
      * для единицы измерения скорости ветра
      */
+    @StateStrategyType(SkipStrategy.class)
     void getWindMeasure();
 
     /**
      * В данном методе из preference файла получаем текущие настроки
      * для единице измерения температуры
      */
+    @StateStrategyType(SkipStrategy.class)
     void getTemperatureMeasure();
 
     /**
      * В данном методе из preference файла получаем текущие настройки
      * для единицы измерения атмосферного давления
      */
+    @StateStrategyType(SkipStrategy.class)
     void getPressureMeasure();
 
     /**
@@ -63,6 +73,7 @@ public interface MainView extends MvpView {
      * которое говорит нам, получали ли мы до старта MainActivity
      * доступ к сети и сохраняли ли в базу данных актуальный прогноз погоды
      */
+    @StateStrategyType(SkipStrategy.class)
     void getFromIntentWasOnline();
 
     /**
@@ -70,21 +81,25 @@ public interface MainView extends MvpView {
      * погоды из-за отсутствия соединения с интернетом, просим проверить соединение
      * и обновить страницу
      */
+    @StateStrategyType(SkipStrategy.class)
     void showSnackBarNoDataToDisplay();
 
     /**
      * Метод показывает snackbar с сообщением о том, что настройки успешно были сохранены
      */
+    @StateStrategyType(SkipStrategy.class)
     void showSnackBarSettingsSavedSuccessfully();
 
     /**
      * Метод показывает progressbar
      */
+    @StateStrategyType(SkipStrategy.class)
     void swipeRefreshShow();
 
     /**
      * Метод убирает progressbar
      */
+    @StateStrategyType(SkipStrategy.class)
     void swipeRefreshHide();
 
     /**
@@ -94,16 +109,19 @@ public interface MainView extends MvpView {
      * @param temperatureMeasure
      * @param pressureMeasure
      */
+    @StateStrategyType(SkipStrategy.class)
     void showWeatherForecast(WeatherForecast weatherForecast, int windMeasure, int temperatureMeasure, int pressureMeasure);
 
     /**
      * Метод очишает все поля, где показывается прогноз погоды
      */
+    @StateStrategyType(SkipStrategy.class)
     void resetWeatherForecastData();
 
     /**
      * Метод проверяет, есть ли связь с интернетом
      */
+    @StateStrategyType(SkipStrategy.class)
     void isOnline();
 
     /**
@@ -111,6 +129,7 @@ public interface MainView extends MvpView {
      * пользователю на выбор почтовые приложения. После выбора пользователем приложения,
      * в графе кому, уже будет вставлен контактный email, команды разработки
      */
+    @StateStrategyType(SkipStrategy.class)
     void causeMailApp();
 
     /**
@@ -118,6 +137,7 @@ public interface MainView extends MvpView {
      * после завершения ее работы
      * @param requestCode
      */
+    @StateStrategyType(SkipStrategy.class)
     void startSettingsActivityForResult(int requestCode);
 
     /**
@@ -125,11 +145,13 @@ public interface MainView extends MvpView {
      * после завершения ее работы
      * @param requestCode
      */
+    @StateStrategyType(SkipStrategy.class)
     void startCitySelectionActivityForResult(int requestCode);
 
     /**
      * Метод завершает текущую активити
      */
+    @StateStrategyType(SkipStrategy.class)
     void finishActivity();
 
 }

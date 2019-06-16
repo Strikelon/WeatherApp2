@@ -5,8 +5,10 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.strikalov.weatherapp.view.SettingsView;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @InjectViewState
+@Singleton
 public class SettingsPresenter extends MvpPresenter<SettingsView> {
 
     @Inject
