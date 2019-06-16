@@ -13,6 +13,7 @@ import com.strikalov.weatherapp.view.SplashView;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -20,6 +21,7 @@ import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 
 @InjectViewState
+@Singleton
 public class SplashPresenter extends MvpPresenter<SplashView> {
 
     /**

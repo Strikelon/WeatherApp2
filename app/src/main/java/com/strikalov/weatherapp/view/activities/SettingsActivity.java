@@ -1,4 +1,4 @@
-package com.strikalov.weatherapp.view;
+package com.strikalov.weatherapp.view.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +15,14 @@ import com.strikalov.weatherapp.App;
 import com.strikalov.weatherapp.R;
 import com.strikalov.weatherapp.common.MeasureSettingsPreferences;
 import com.strikalov.weatherapp.presenter.SettingsPresenter;
+import com.strikalov.weatherapp.view.SettingsView;
 
 import javax.inject.Inject;
 
-public class SettingsActivity extends MvpAppCompatActivity implements SettingsView{
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class SettingsActivity extends MvpAppCompatActivity implements SettingsView {
 
     /**
      * Инжектим презентер с помощью dagger
@@ -48,19 +52,35 @@ public class SettingsActivity extends MvpAppCompatActivity implements SettingsVi
     /**
      * Создание групп радио кнопок
      */
-    private RadioGroup radioGroupWindSpeedGroup;
-    private RadioGroup radioGroupTemperatureGroup;
-    private RadioGroup radioGroupPressureGroup;
+    @BindView(R.id.wind_speed_group)
+    RadioGroup radioGroupWindSpeedGroup;
+
+    @BindView(R.id.temperature_group)
+    RadioGroup radioGroupTemperatureGroup;
+
+    @BindView(R.id.pressure_group)
+    RadioGroup radioGroupPressureGroup;
 
     /**
      * Создание радиокнопок
      */
-    private RadioButton radioButtonMeters;
-    private RadioButton radioButtonKilometers;
-    private RadioButton radioButtonCelsius;
-    private RadioButton radioButtonFahrenheit;
-    private RadioButton radioButtonMm;
-    private RadioButton radioButtonHpa;
+    @BindView(R.id.radio_meters)
+    RadioButton radioButtonMeters;
+
+    @BindView(R.id.radio_kilometers)
+    RadioButton radioButtonKilometers;
+
+    @BindView(R.id.radio_celsius)
+    RadioButton radioButtonCelsius;
+
+    @BindView(R.id.radio_fahrenheit)
+    RadioButton radioButtonFahrenheit;
+
+    @BindView(R.id.radio_mm)
+    RadioButton radioButtonMm;
+
+    @BindView(R.id.radio_hpa)
+    RadioButton radioButtonHpa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,25 +90,8 @@ public class SettingsActivity extends MvpAppCompatActivity implements SettingsVi
         Toolbar toolbar = findViewById(R.id.toolbar_settings);
         setSupportActionBar(toolbar);
 
-        initWidgets();
+        ButterKnife.bind(this);
 
-    }
-
-    /**
-     * Инициализируем радионопки и группы радиокнопок,
-     * для последующей работы с ними
-     */
-    private void initWidgets(){
-        radioGroupWindSpeedGroup = findViewById(R.id.wind_speed_group);
-        radioGroupTemperatureGroup = findViewById(R.id.temperature_group);
-        radioGroupPressureGroup = findViewById(R.id.pressure_group);
-
-        radioButtonMeters = findViewById(R.id.radio_meters);
-        radioButtonKilometers = findViewById(R.id.radio_kilometers);
-        radioButtonCelsius = findViewById(R.id.radio_celsius);
-        radioButtonFahrenheit = findViewById(R.id.radio_fahrenheit);
-        radioButtonMm = findViewById(R.id.radio_mm);
-        radioButtonHpa = findViewById(R.id.radio_hpa);
     }
 
     /**

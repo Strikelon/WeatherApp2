@@ -1,4 +1,4 @@
-package com.strikalov.weatherapp.view;
+package com.strikalov.weatherapp.view.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,13 +29,17 @@ import com.strikalov.weatherapp.adapters.CitySelectionRecyclerViewAdapter.Simple
 import com.strikalov.weatherapp.common.CityDownloadsPreferences;
 import com.strikalov.weatherapp.model.entities.City;
 import com.strikalov.weatherapp.presenter.CitySelectionPresenter;
+import com.strikalov.weatherapp.view.CitySelectionView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class CitySelectionActivity extends MvpAppCompatActivity implements CitySelectionView  {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class CitySelectionActivity extends MvpAppCompatActivity implements CitySelectionView {
 
     /**
      * Инжектим CitySelectionPresenter с помощью dagger
@@ -80,11 +84,13 @@ public class CitySelectionActivity extends MvpAppCompatActivity implements CityS
     /**
      *  С помощью виджета AutoCompleteTextView пользователи будут выбирать город
      */
-    private AutoCompleteTextView autoCompleteTextView;
+    @BindView(R.id.auto_complete_text_search_city)
+    AutoCompleteTextView autoCompleteTextView;
     /**
      * RecyclerView отображает список избранных городов
      */
-    private RecyclerView recyclerView;
+    @BindView(R.id.city_selection_recycler_view)
+    RecyclerView recyclerView;
     /**
      * Адаптер для RecyclerView
      */
@@ -92,15 +98,18 @@ public class CitySelectionActivity extends MvpAppCompatActivity implements CityS
     /**
      * Прогресс бар
      */
-    private ProgressBar progressBar;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
     /**
      * Макет с отображением текста, о том что список избранных городов пуст
      */
-    private FrameLayout frameLayoutEmptyList;
+    @BindView(R.id.frame_layout_empty_list)
+    FrameLayout frameLayoutEmptyList;
     /**
      * Ссылка на самый главный родительский макет, для отображения snackbar
      */
-    private CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.coordinator_layout)
+    CoordinatorLayout coordinatorLayout;
 
 
     @Override
@@ -111,25 +120,16 @@ public class CitySelectionActivity extends MvpAppCompatActivity implements CityS
         Toolbar toolbar = findViewById(R.id.toolbar_city_selection);
         setSupportActionBar(toolbar);
 
-        initWidgets();
+        ButterKnife.bind(this);
+
         initRecyclerView();
 
-    }
-
-    /**
-     * Инициализация виджетов
-     */
-    private void initWidgets(){
-        coordinatorLayout = findViewById(R.id.coordinator_layout);
-        progressBar = findViewById(R.id.progress_bar);
-        frameLayoutEmptyList = findViewById(R.id.frame_layout_empty_list);
     }
 
     /**
      * Инициализация RecyclerView, адаптера и слушателей
      */
     private void initRecyclerView(){
-        recyclerView = findViewById(R.id.city_selection_recycler_view);
         citySelectionRecyclerViewAdapter =
                 new CitySelectionRecyclerViewAdapter(new ArrayList<City>());
         ItemTouchHelper.Callback callback
@@ -197,7 +197,6 @@ public class CitySelectionActivity extends MvpAppCompatActivity implements CityS
     @Override
     public void initAutoCompleteTextView(List<City> cityList) {
 
-        autoCompleteTextView = findViewById(R.id.auto_complete_text_search_city);
         final CityAutoCompleteAdapter cityAutoCompleteAdapter = new CityAutoCompleteAdapter(CitySelectionActivity.this, cityList);
         autoCompleteTextView.setAdapter(cityAutoCompleteAdapter);
 
