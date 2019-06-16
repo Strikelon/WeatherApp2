@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.SplashActivity"
+        <activity android:name=".view.activities.SplashActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -23,13 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MainActivity"
+        <activity android:name=".view.activities.MainActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.CitySelectionActivity"
+        <activity android:name=".view.activities.CitySelectionActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.SettingsActivity"
+        <activity android:name=".view.activities.SettingsActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait">
         </activity>

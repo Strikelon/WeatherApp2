@@ -13,6 +13,9 @@ import com.strikalov.weatherapp.model.entities.City;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  *  Адаптер для RecyclerView в CitySelectionActivity, поддерживает клики по элементам, а так же
  *  свайпы влево или вправо для удаления элементов, благодаря интерфейсу CitySelectionTouchHelperAdapter
@@ -57,14 +60,16 @@ public class CitySelectionRecyclerViewAdapter
 
     public class CityViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView cityName;
-        private ImageView cityImage;
+        @BindView(R.id.city_name)
+        TextView cityName;
+
+        @BindView(R.id.city_image)
+        ImageView cityImage;
 
         public CityViewHolder(View view){
             super(view);
 
-            cityName = view.findViewById(R.id.city_name);
-            cityImage = view.findViewById(R.id.city_image);
+            ButterKnife.bind(this, view);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

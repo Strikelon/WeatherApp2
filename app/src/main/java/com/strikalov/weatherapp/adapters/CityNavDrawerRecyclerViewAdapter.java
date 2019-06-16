@@ -12,6 +12,9 @@ import com.strikalov.weatherapp.model.entities.City;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Адаптер для RecyclerView, который находится на навигационной шторке в MainActivity
  * и содержит список избранных городов
@@ -50,13 +53,16 @@ public class CityNavDrawerRecyclerViewAdapter
     public class CityViewHolder extends RecyclerView.ViewHolder{
 
         private View itemView;
-        private TextView cityName;
+
+        @BindView(R.id.city_name)
+        TextView cityName;
 
         public CityViewHolder(View view){
             super(view);
 
+            ButterKnife.bind(this, view);
+
             itemView = view;
-            cityName = view.findViewById(R.id.city_name);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

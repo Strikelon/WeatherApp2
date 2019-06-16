@@ -1,4 +1,4 @@
-package com.strikalov.weatherapp.view;
+package com.strikalov.weatherapp.view.activities;
 
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -12,10 +12,13 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.strikalov.weatherapp.App;
 import com.strikalov.weatherapp.common.CityDownloadsPreferences;
 import com.strikalov.weatherapp.presenter.SplashPresenter;
+import com.strikalov.weatherapp.view.SplashView;
+import com.strikalov.weatherapp.view.activities.CitySelectionActivity;
+import com.strikalov.weatherapp.view.activities.MainActivity;
 
 import javax.inject.Inject;
 
-public class SplashActivity extends MvpAppCompatActivity implements SplashView{
+public class SplashActivity extends MvpAppCompatActivity implements SplashView {
 
     /**
      * Инжектим презентер с помощью dagger

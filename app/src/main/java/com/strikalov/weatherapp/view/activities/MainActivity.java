@@ -1,4 +1,4 @@
-package com.strikalov.weatherapp.view;
+package com.strikalov.weatherapp.view.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,11 +32,16 @@ import com.strikalov.weatherapp.common.MeasureSettingsPreferences;
 import com.strikalov.weatherapp.model.entities.City;
 import com.strikalov.weatherapp.model.entities.WeatherForecast;
 import com.strikalov.weatherapp.presenter.MainPresenter;
+import com.strikalov.weatherapp.view.MainView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends MvpAppCompatActivity implements MainView, SwipeRefreshLayout.OnRefreshListener {
 
@@ -80,40 +84,47 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Swip
      * DrawerLayout необходим для показа слева навигационного меню NavigationDrawer
      * при нажатии на кнопку бургер
      */
-    private DrawerLayout drawer;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
 
     /**
      * Ссылка на самый главный макет в mainActivity, для показа Snackbar
      */
-    private CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.coordinator_layout)
+    CoordinatorLayout coordinatorLayout;
 
     /**
      * Кнопка с иконкой лупы в NavigationDrawer для вызовал CitySelectionActivity
      */
-    private ImageButton navSearchButton;
+    @BindView(R.id.search_button)
+    ImageButton navSearchButton;
 
     /**
      * Тексотовая кнопка в NavigationDrawer для вызыва SettingsActivity
      */
-    private TextView navSettingsButton;
+    @BindView(R.id.text_settings_button)
+    TextView navSettingsButton;
 
     /**
      * Тексотовая кнопка в NavigationDrawer для отправки сообщения об ошибке
      * команде разработчиков
      */
-    private TextView navSendErrorButton;
+    @BindView(R.id.text_send_error_button)
+    TextView navSendErrorButton;
 
     /**
      * При свайпе вниз позволяет пользователю обновить прогноз погоды
      */
-    private SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     /**
      * RecyclerView расположенный в NavigationDrawer для отображения списка
      * избранных городов и также возможности при нажатии на один из городов получить
      * прогноз погоды для выбранного города
      */
-    private RecyclerView navigationRecyclerView;
+    @BindView(R.id.navigation_menu_recycler)
+    RecyclerView navigationRecyclerView;
     /**
      * Адаптер для RecyclerView, который расположен в NavigationDrawer
      */
@@ -122,52 +133,62 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Swip
     /**
      * Текстовое поле для отображения температуры
      */
-    private TextView temperatureText;
+    @BindView(R.id.temperature_text)
+    TextView temperatureText;
 
     /**
      * ImageView для отображения иконки, которая соответствует прогнозу погоды (Солнце, Тучи и т.д.)
      */
-    private ImageView weatherPicture;
+    @BindView(R.id.weather_picture)
+    ImageView weatherPicture;
 
     /**
      * Текстовое поле показывает дату прогноза погоды
      */
-    private TextView textDate;
+    @BindView(R.id.text_date)
+    TextView textDate;
 
     /**
      * Текстовое поле показывает описание текущей погоды (ясное небо, дождь и т.д)
      */
-    private TextView weatherPictureDescription;
+    @BindView(R.id.weather_picture_description)
+    TextView weatherPictureDescription;
 
     /**
      * Текстовое поле показывает значение влажности
      */
-    private TextView textHumidity;
+    @BindView(R.id.text_humidity)
+    TextView textHumidity;
 
     /**
      * Текстовое поле показывает значение атмосферного давления
      */
-    private TextView textPressure;
+    @BindView(R.id.text_pressure)
+    TextView textPressure;
 
     /**
      * Текстовое поле показывает время восхода солнца
      */
-    private TextView textSunrise;
+    @BindView(R.id.text_sunrise)
+    TextView textSunrise;
 
     /**
      * Текстовое поле показывает значение скорости ветра
      */
-    private TextView windSpeed;
+    @BindView(R.id.wind_speed)
+    TextView windSpeed;
 
     /**
      * Текстовое поле показывает направление ветра
      */
-    private TextView windDirection;
+    @BindView(R.id.wind_direction)
+    TextView windDirection;
 
     /**
      * Текстовое поле показывает время заходы солнца
      */
-    private TextView textSunset;
+    @BindView(R.id.text_sunset)
+    TextView textSunset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,10 +198,11 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Swip
         Toolbar toolbar = findViewById(R.id.toolbar_main_activity);
         setSupportActionBar(toolbar);
 
+        ButterKnife.bind(this);
+
         /**
          * Инициализации для отображения NavigationDrawer
          */
-        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer,
                 toolbar,
@@ -189,82 +211,55 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Swip
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        initWidgets();
-        initNavigationRecyclerView();
-
-    }
-
-    /**
-     * Инициализация виджетов расположенных в макете (текстовые поля, ImageView, swipeRefreshLayout)
-     * а установка слушателей для них
-     */
-    private void initWidgets(){
-        coordinatorLayout = findViewById(R.id.coordinator_layout);
-
-        temperatureText = findViewById(R.id.temperature_text);
-        weatherPicture = findViewById(R.id.weather_picture);
-        textDate = findViewById(R.id.text_date);
-        weatherPictureDescription = findViewById(R.id.weather_picture_description);
-        textHumidity = findViewById(R.id.text_humidity);
-        textPressure = findViewById(R.id.text_pressure);
-        textSunrise = findViewById(R.id.text_sunrise);
-        windSpeed = findViewById(R.id.wind_speed);
-        windDirection = findViewById(R.id.wind_direction);
-        textSunset = findViewById(R.id.text_sunset);
-
-        navSearchButton = findViewById(R.id.search_button);
-        navSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /**
-                 * При нажатии на иконку с лупой в NavigationDrawer закрываем
-                 * навигационную шторку и вызываем соответствующий метод в презентере
-                 */
-                drawer.closeDrawer(GravityCompat.START);
-                mainPresenter.onClickCitySelection();
-            }
-        });
-
-        navSettingsButton = findViewById(R.id.text_settings_button);
-        navSettingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /**
-                 * При нажатии на текстовую кнопку для вызыва экрана настроек, закрываем
-                 * навигационную шторку и вызываем соответствующий метод в презентере
-                 */
-                drawer.closeDrawer(GravityCompat.START);
-                mainPresenter.onClickSettings();
-            }
-        });
-
-        navSendErrorButton = findViewById(R.id.text_send_error_button);
-        navSendErrorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /**
-                 * При нажатии на текстовую кнопку для отправки сообщения
-                 * команде разработчиков, закрываем навигационную шторку и
-                 * вызываем соответствующий метод в презентере
-                 */
-                drawer.closeDrawer(GravityCompat.START);
-                mainPresenter.onClickSendFeedback();
-            }
-        });
-
-        swipeRefreshLayout = findViewById(R.id.swipe_container);
+        /**
+         * Инициализация свайпа вниз для обновления прогноза погоды
+         */
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        initNavigationRecyclerView();
+
     }
+
+    /**
+     * При нажатии на иконку с лупой в NavigationDrawer закрываем
+     * навигационную шторку и вызываем соответствующий метод в презентере
+     */
+    @OnClick(R.id.search_button)
+    public void onClickNavSearchButton(){
+        drawer.closeDrawer(GravityCompat.START);
+        mainPresenter.onClickCitySelection();
+    }
+
+    /**
+     * При нажатии на текстовую кнопку для вызыва экрана настроек, закрываем
+     * навигационную шторку и вызываем соответствующий метод в презентере
+     */
+    @OnClick(R.id.text_settings_button)
+    public void onClickNavSettingsButton(){
+        drawer.closeDrawer(GravityCompat.START);
+        mainPresenter.onClickSettings();
+    }
+
+    /**
+     * При нажатии на текстовую кнопку для отправки сообщения
+     * команде разработчиков, закрываем навигационную шторку и
+     * вызываем соответствующий метод в презентере
+     */
+    @OnClick(R.id.text_send_error_button)
+    public void onClickNavSendErrorButton(){
+        drawer.closeDrawer(GravityCompat.START);
+        mainPresenter.onClickSendFeedback();
+    }
+
 
     /**
      * Инициализируем RecyclerView в NavigationDrawer с избранными городами
      */
     private void initNavigationRecyclerView(){
-        navigationRecyclerView = findViewById(R.id.navigation_menu_recycler);
         cityNavDrawerRecyclerViewAdapter =
                 new CityNavDrawerRecyclerViewAdapter(new ArrayList<City>(),
                         getResources().getColor(R.color.colorAccent));
